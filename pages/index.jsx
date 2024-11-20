@@ -65,6 +65,11 @@ export default function HomePage() {
     };
 
     const handleKeyDown = (event) => {
+        const urlInput = document.getElementById('object-box');
+        if (document.activeElement === urlInput) {
+            return;
+        }
+
         if (event.key === 'Escape') {
             handleCloseTutorial();
         } else if (event.key === 'e' || event.key === 'E') {
