@@ -20,7 +20,13 @@ const templateTypeStrategies = {
         const dropdownField = question.e_cloze.e_dropdownField;
         if (dropdownField.length > 0) {
             dropdownField.forEach(dropDown => {
-                question.outputHTML += `<div>${dropDown.option[dropDown.correctOptionValue].title}</div>`;
+                const correctOption = dropDown.option[dropDown.correctOptionValue];
+                if (correctOption && correctOption.title) {
+                    question.outputHTML += `<div>${correctOption.title}</div>`;
+                } else {
+                    const currentDateTime = new Date().toLocaleString();
+                    console.log(`[${currentDateTime}] DropDown without title:`, dropDown);
+                }
             });
         }
 

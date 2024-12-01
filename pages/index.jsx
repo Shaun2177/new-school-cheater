@@ -30,6 +30,7 @@ export default function HomePage() {
 
         if (!csrfToken || !url) {
             setResponse('Error: CSRF Token or URL missing')
+            setPages([])  // Clear pages
             return
         }
 
@@ -42,8 +43,10 @@ export default function HomePage() {
 
             setPages(data.pages)  // Set the pages from the server response
             setCurrentPageIndex(0)  // Reset to the first page
+            setResponse('')  // Clear any previous response
         } catch (error) {
             setResponse(`Error: ${error.response?.data?.error || 'Failed to fetch data'}`)
+            setPages([])  // Clear pages
         }
     }
 
@@ -145,8 +148,8 @@ export default function HomePage() {
                 </form>
             </div>
 
-            {/* Conditionally render outputContainer based on pages */}
-            {pages.length > 0 && (
+            {/* Conditionally render outputContainer based on pages or response */}
+            {(pages.length > 0 || response) && (
                 <div
                     id="outputContainer"
                     style={{
@@ -200,7 +203,7 @@ export default function HomePage() {
                             wordWrap: "break-word"
                         }}
                     >
-                        {renderPageContent(pages[currentPageIndex])}
+                        {pages.length > 0 ? renderPageContent(pages[currentPageIndex]) : response}
                     </div>
                 </div>
             )}

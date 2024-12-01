@@ -37,8 +37,8 @@ export default async function handler(req, res) {
             return res.status(200).json({ pages: response })
         }
 
-        if (url.hostnamae === "classe.world") {
-            return alert("עדיין לא עובד")
+        if (url.hostname === "classe.world") {
+            return res.status(400).json({ error: 'עדיין לא עובד' });
         }
 
         return res.status(400).json({ error: 'Invalid URL prefix' });
